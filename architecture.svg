@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L9,3 L0,6 z" fill="#8a8a8a"/>
+    </marker>
+    <style>
+      .title { font-size: 26px; font-weight: bold; fill: #232f3e; }
+      .phase { font-size: 15px; font-weight: bold; fill: #ffffff; }
+      .box  { fill: #ffffff; stroke: #d5dbdb; stroke-width: 1.5; rx: 8; }
+      .svc  { font-size: 14px; font-weight: bold; fill: #232f3e; }
+      .sub  { font-size: 12px; fill: #5a6c7d; }
+      .lbl  { font-size: 12px; fill: #8a8a8a; font-style: italic; }
+      .aws  { fill: #ff9900; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="680" fill="#f7f9fa"/>
+  <text x="40" y="50" class="title">FinOps Cost-Control Architecture</text>
+  <text x="40" y="74" class="sub">Inform → Optimize → Operate · multi-account AWS Organization</text>
+
+  <!-- Phase headers -->
+  <rect x="40" y="100" width="340" height="34" rx="8" fill="#ff9900"/>
+  <text x="210" y="122" class="phase" text-anchor="middle">1 · INFORM (see it)</text>
+  <rect x="430" y="100" width="340" height="34" rx="8" fill="#7aa7c7"/>
+  <text x="600" y="122" class="phase" text-anchor="middle">2 · OPTIMIZE (fix it)</text>
+  <rect x="820" y="100" width="340" height="34" rx="8" fill="#4caf7d"/>
+  <text x="990" y="122" class="phase" text-anchor="middle">3 · OPERATE (prove it)</text>
+
+  <!-- INFORM column -->
+  <g>
+    <rect x="40" y="150" width="340" height="86" class="box"/>
+    <circle cx="66" cy="172" r="8" class="aws"/>
+    <text x="82" y="177" class="svc">AWS Organizations</text>
+    <text x="52" y="202" class="sub">Consolidated billing · SCP tag enforcement</text>
+    <text x="52" y="220" class="sub">Owner / Env / Project / CostCenter tags</text>
+
+    <rect x="40" y="250" width="340" height="86" class="box"/>
+    <circle cx="66" cy="272" r="8" class="aws"/>
+    <text x="82" y="277" class="svc">Cost &amp; Usage Report → S3</text>
+    <text x="52" y="302" class="sub">Hourly granularity, Parquet, data lake</text>
+    <text x="52" y="320" class="sub">queried via Athena</text>
+
+    <rect x="40" y="350" width="340" height="86" class="box"/>
+    <circle cx="66" cy="372" r="8" class="aws"/>
+    <text x="82" y="377" class="svc">Cost Explorer + Compute Optimizer</text>
+    <text x="52" y="402" class="sub">Daily cost by service · rightsizing findings</text>
+    <text x="52" y="420" class="sub">free — ignoring it is the expensive option</text>
+  </g>
+
+  <!-- OPTIMIZE column -->
+  <g>
+    <rect x="430" y="150" width="340" height="86" class="box"/>
+    <circle cx="456" cy="172" r="8" class="aws"/>
+    <text x="472" y="177" class="svc">Commit: Savings Plans + Spot</text>
+    <text x="442" y="202" class="sub">Compute SPs cover EC2 · Fargate · Lambda</text>
+    <text x="442" y="220" class="sub">Spot for batch / fault-tolerant workloads</text>
+
+    <rect x="430" y="250" width="340" height="86" class="box"/>
+    <circle cx="456" cy="272" r="8" class="aws"/>
+    <text x="472" y="277" class="svc">Right-size + Graviton</text>
+    <text x="442" y="302" class="sub">Downsize over-provisioned EC2 / RDS</text>
+    <text x="442" y="320" class="sub">Graviton ≈ 20% better price-performance</text>
+
+    <rect x="430" y="350" width="340" height="86" class="box"/>
+    <circle cx="456" cy="372" r="8" class="aws"/>
+    <text x="472" y="377" class="svc">Storage lifecycle + janitor Lambda</text>
+    <text x="442" y="402" class="sub">S3 Lifecycle → Glacier tiers</text>
+    <text x="442" y="420" class="sub">Lambda deletes unattached EBS / idle ELBs</text>
+  </g>
+
+  <!-- OPERATE column -->
+  <g>
+    <rect x="820" y="150" width="340" height="86" class="box"/>
+    <circle cx="846" cy="172" r="8" class="aws"/>
+    <text x="862" y="177" class="svc">AWS Budgets + Anomaly Detection</text>
+    <text x="832" y="202" class="sub">Alert at 80% actual / 100% forecasted</text>
+    <text x="832" y="220" class="sub">ML-powered spend anomaly alerts</text>
+
+    <rect x="820" y="250" width="340" height="86" class="box"/>
+    <circle cx="846" cy="272" r="8" class="aws"/>
+    <text x="862" y="277" class="svc">SNS → Slack / PagerDuty</text>
+    <text x="832" y="302" class="sub">finops_guard.py anomaly scan in CI</text>
+    <text x="832" y="320" class="sub">fail the build on unexplained spikes</text>
+
+    <rect x="820" y="350" width="340" height="86" class="box"/>
+    <circle cx="846" cy="372" r="8" class="aws"/>
+    <text x="862" y="377" class="svc">Weekly review · unit economics</text>
+    <text x="832" y="402" class="sub">QuickSight dashboard: $ per order / per user</text>
+    <text x="832" y="420" class="sub">showback reports per team / CostCenter</text>
+  </g>
+
+  <!-- Flow arrows between phases -->
+  <line x1="380" y1="293" x2="428" y2="293" stroke="#8a8a8a" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="770" y1="293" x2="818" y2="293" stroke="#8a8a8a" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Feedback loop -->
+  <path d="M 990 470 L 990 560 L 210 560 L 210 452" fill="none" stroke="#ff9900" stroke-width="2.5" stroke-dasharray="10,6" marker-end="url(#arrow)"/>
+  <text x="600" y="548" class="lbl" text-anchor="middle">feedback: savings fund the next optimization cycle</text>
+
+  <!-- Bottom strip -->
+  <rect x="40" y="590" width="1120" height="56" rx="8" fill="#232f3e"/>
+  <text x="600" y="624" text-anchor="middle" font-size="14" fill="#ffffff">Guardrail mantra: <tspan font-weight="bold">tag it, commit to the baseline, automate the janitor, review weekly.</tspan></text>
+</svg>
